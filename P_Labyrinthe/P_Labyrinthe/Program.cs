@@ -46,14 +46,10 @@ namespace P_Labyrinthe
                     {
                         Console.ResetColor();
                     }
-                    Console.Write("█");
+                    Console.Write("██");
                 }
                 Console.WriteLine();
             }
-            /*Console.SetCursorPosition(firstCell[0], firstCell[1]+1);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("o");
-            Console.ResetColor();*/
         }
 
         static bool CheckCell(int x, int y, int lastX, int lastY)
@@ -72,32 +68,6 @@ namespace P_Labyrinthe
             else
             {
                 tabGrid[x, y] = 1;
-
-                /*int i = 4;
-
-                while( i > 0)
-                {
-                    switch(rand.Next(4))
-                    {
-                        case 0:
-                            {
-                                if (CheckCell(x + 1, y, x, y))
-                                { }
-                                break;
-                            }
-                        case 1:
-                            {
-                                if (CheckCell(x - 1, y, x, y))
-                                { }
-                                break;
-                            }
-                        case 2:
-                            if (CheckCell(x + 1, y, x, y))
-                            { }
-                            break;
-                    }
-                }*/
-
                 int rand2 = rand.Next(4);
 
                 switch (rand2)
