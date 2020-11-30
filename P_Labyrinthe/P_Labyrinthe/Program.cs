@@ -67,70 +67,37 @@ namespace P_Labyrinthe
             }
             else
             {
+                //enregistrement de la case
                 tabGrid[x, y] = 1;
-                int rand2 = rand.Next(4);
 
-                switch (rand2)
+                List<int> positionsY = new List<int> { -1, 1 };         //stock des positions X
+                List<int> positionsX = new List<int> { -1, 1 };         // et des Y
+
+                do
                 {
-                    case 0:
-                        if (CheckCell(x + 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y + 1, x, y))
-                        { }
-                        else if (CheckCell(x - 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y - 1, x, y))
-                        { }
-                        else
-                        {
-                            return false;
-                        }
-                        break;
-                    case 1:
-                        if (CheckCell(x, y + 1, x, y))
-                        { }
-                        else if (CheckCell(x - 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y - 1, x, y))
-                        { }
-                        else if (CheckCell(x + 1, y, x, y))
-                        { }
-                        else
-                        {
-                            return false;
-                        }
-                        break;
-                    case 2:
-                        if (CheckCell(x - 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y - 1, x, y))
-                        { }
-                        else if (CheckCell(x + 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y + 1, x, y))
-                        { }
-                        else
-                        {
-                            return false;
-                        }
-                        break;
-                    case 3:
-                        if (CheckCell(x, y - 1, x, y))
-                        { }
-                        else if (CheckCell(x + 1, y, x, y))
-                        { }
-                        else if (CheckCell(x, y + 1, x, y))
-                        { }
-                        else if (CheckCell(x - 1, y, x, y))
-                        { }
-                        else
-                        {
-                            return false;
-                        }
-                        break;
-                }
+                    switch (rand.Next(2))
+                    {
+                        case 0:
+                            if (positionsX.Count >= 1)
+                            {
+                                int randX = rand.Next(positionsX.Count -1 );
+                                CheckCell(x + positionsX[randX], y, x, y);
+                                positionsX.Remove(positionsX[randX]);
+                            }
+                            break;
+                        case 1:
+                            if (positionsY.Count >= 1)
+                            {
+                                int randY = rand.Next(positionsY.Count -1 );
+                                CheckCell(x, y + positionsY[randY], x, y);
+                                positionsY.Remove(positionsY[randY]);
+                            } 
+                            break;
+                    }
+                } while (positionsX.Count > 0 || positionsY.Count > 0);
 
-                return true;
+
+                    return false;
             }
         }
 
