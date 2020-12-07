@@ -17,7 +17,7 @@ var tabGrid = [[]];
 var firstCell = [];
 var firstPos = [];
 
-for(var y = 0; y < GRIDSIZE; y++){
+for (var y = 0; y < GRIDSIZE; y++) {
   tabGrid.push(new Array(GRIDSIZE));
 }
 
@@ -174,8 +174,11 @@ firstCell = getRndBorderCell();
 tabGrid[firstCell[0]][firstCell[1]] = 1;
 console.log(firstPos);
 checkCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
-console.log(firstCell);
-console.log(tabGrid);
+
+do {
+  lastCell = getRndBorderCell();
+} while (!checkLastCell());
+tabGrid[lastCell[0]][lastCell[1]] = 1;
 printGrid();
 
 function printGrid() {
@@ -191,4 +194,38 @@ function printGrid() {
       }
     }
   }
+}
+
+function checkLastCell() {
+  switch (entryCardinalPoint) {
+    case "N":
+      if (exitCardinalPoint == "S") {
+        if (tabGrid[lastCell[0]][lastCell[1] - 1] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "S":
+      if (exitCardinalPoint == "N") {
+        if (tabGrid[lastCell[0]][lastCell[1] + 1] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "E":
+      if (exitCardinalPoint == "W") {
+        if (tabGrid[lastCell[0] + 1][lastCell[1]] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "W":
+      if (exitCardinalPoint == "E") {
+        if (tabGrid[lastCell[0] - 1][lastCell[1]] == 1) {
+          return true;
+        }
+      }
+      break;
+  }
+  return false;
 }
