@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace P_Labyrinthe
 {
@@ -15,6 +12,11 @@ namespace P_Labyrinthe
         static int[,] tabGrid = new int[GRIDSIZE, GRIDSIZE];
 
         static int[] firstPos = new int[2];
+
+        static int[] lastCell;
+
+        static string entryCardinalPoint = "";
+        static string exitCardinalPoint = "";
 
         static void Main(string[] args)
         {
@@ -32,7 +34,15 @@ namespace P_Labyrinthe
             tabGrid[firstCell[0], firstCell[1]] = 1;
 
             CheckCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
+            
+            do
+            {
 
+                lastCell = GetRndBorderCell();
+
+            } while (!CheckLastCell());
+
+            tabGrid[lastCell[0], lastCell[1]] = 1;
 
             for (int y = 0; y < GRIDSIZE; y++)
             {
@@ -80,7 +90,7 @@ namespace P_Labyrinthe
                         case 0:
                             if (positionsX.Count >= 1)
                             {
-                                int randX = rand.Next(positionsX.Count -1 );
+                                int randX = rand.Next(positionsX.Count - 1);
                                 CheckCell(x + positionsX[randX], y, x, y);
                                 positionsX.Remove(positionsX[randX]);
                             }
@@ -88,22 +98,65 @@ namespace P_Labyrinthe
                         case 1:
                             if (positionsY.Count >= 1)
                             {
-                                int randY = rand.Next(positionsY.Count -1 );
+                                int randY = rand.Next(positionsY.Count - 1);
                                 CheckCell(x, y + positionsY[randY], x, y);
                                 positionsY.Remove(positionsY[randY]);
-                            } 
+                            }
                             break;
                     }
                 } while (positionsX.Count > 0 || positionsY.Count > 0);
 
-
-                    return false;
+                return false;
             }
+        }
+
+        static bool CheckLastCell()
+        {
+            switch (entryCardinalPoint)
+            {
+                case "N":
+                    if (exitCardinalPoint == "S")
+                    {
+                        if (tabGrid[lastCell[0], lastCell[1] - 1] == 1)
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case "S":
+                    if (exitCardinalPoint == "N")
+                    {
+                        if (tabGrid[lastCell[0], lastCell[1] + 1] == 1)
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case "E":
+                    if (exitCardinalPoint == "W")
+                    {
+                        if (tabGrid[lastCell[0] + 1, lastCell[1]] == 1)
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+                case "W":
+                    if (exitCardinalPoint == "E")
+                    {
+                        if (tabGrid[lastCell[0] - 1, lastCell[1]] == 1)
+                        {
+                            return true;
+                        }
+                    }
+                    break;
+            }
+            return false;
         }
 
         static int[] GetRndBorderCell()
         {
-            int[] buffer;
+            int[] buffer = null;
             switch (rand.Next(4))
             {
                 //top
@@ -112,7 +165,14 @@ namespace P_Labyrinthe
                     firstPos[0] = buffer[0];
                     firstPos[1] = buffer[1];
                     firstPos[1] += 1;
-                    return buffer;
+                    if (entryCardinalPoint == "")
+                    {
+                        entryCardinalPoint = "N";
+                    }
+                    else
+                    {
+                        exitCardinalPoint = "N";
+                    }
                     break;
                 //bottom
                 case 1:
@@ -120,7 +180,14 @@ namespace P_Labyrinthe
                     firstPos[0] = buffer[0];
                     firstPos[1] = buffer[1];
                     firstPos[1] -= 1;
-                    return buffer;
+                    if (entryCardinalPoint == "")
+                    {
+                        entryCardinalPoint = "S";
+                    }
+                    else
+                    {
+                        exitCardinalPoint = "S";
+                    }
                     break;
                 //left
                 case 2:
@@ -128,7 +195,14 @@ namespace P_Labyrinthe
                     firstPos[0] = buffer[0];
                     firstPos[1] = buffer[1];
                     firstPos[0] += 1;
-                    return buffer;
+                    if (entryCardinalPoint == "")
+                    {
+                        entryCardinalPoint = "W";
+                    }
+                    else
+                    {
+                        exitCardinalPoint = "W";
+                    }
                     break;
                 //right
                 case 3:
@@ -136,10 +210,17 @@ namespace P_Labyrinthe
                     firstPos[0] = buffer[0];
                     firstPos[1] = buffer[1];
                     firstPos[0] -= 1;
-                    return buffer;
+                    if (entryCardinalPoint == "")
+                    {
+                        entryCardinalPoint = "E";
+                    }
+                    else
+                    {
+                        exitCardinalPoint = "E";
+                    }
                     break;
             }
-            return null;
+            return buffer;
         }
     }
 }
