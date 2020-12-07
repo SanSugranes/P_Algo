@@ -12,6 +12,7 @@ var height = canvas.height;
 var player = { width: 10, height: 10, x: 10, y: 10 };
 var cell = { width: 10, height: 10 };
 
+<<<<<<< HEAD
 
 
 var tabGrid = [];
@@ -19,8 +20,17 @@ for (var y = 0; y < GRIDSIZE; y++) {
   tabGrid.push(new Array(GRIDSIZE));
 }
 
+=======
+var GRIDSIZE = 30;
+
+var tabGrid = [[]];
+>>>>>>> 75241bfc6aed615ec947e079c9e9400b061ceb4b
 var firstCell = [];
 var firstPos = [];
+
+for (var y = 0; y < GRIDSIZE; y++) {
+  tabGrid.push(new Array(GRIDSIZE));
+}
 
 var entryCardinalPoint = "";
 var exitCardinalPoint = "";
@@ -60,7 +70,6 @@ function update(dt) {
 }
 
 function render(ctx, frame, dt) {
-  renderPlayer();
 }
 
 function renderPlayer(dt) {
@@ -79,13 +88,13 @@ function checkCell(x, y, lastX, lastY) {
     return false;
   }
   //check des cotés
-  if ((lastX != x + 1 && tabGrid[x + 1, y] == 1) || (lastX != x - 1 && tabGrid[x - 1, y] == 1) ||
-    (lastY != y + 1 && tabGrid[x, y + 1] == 1) || (lastY != y - 1 && tabGrid[x, y - 1] == 1)) {
+  if ((lastX != x + 1 && tabGrid[x + 1][y] == 1) || (lastX != x - 1 && tabGrid[x - 1][y] == 1) ||
+    (lastY != y + 1 && tabGrid[x][y + 1] == 1) || (lastY != y - 1 && tabGrid[x][y - 1] == 1)) {
     return false;
   }
   else {
     //enregistrement de la case
-    tabGrid[x, y] = 1;
+    tabGrid[x][y] = 1;
 
     var positionsY = [-1, 1];         //stock des positions Y
     var positionsX = [-1, 1];         // et des X
@@ -94,16 +103,16 @@ function checkCell(x, y, lastX, lastY) {
       switch (Math.floor(Math.random() * 2)) {
         case 0:
           if (positionsX.length >= 1) {
-            var randX = Math.floor(Math.random() * positionsX.length - 1);
-            CheckCell(x + positionsX[randX], y, x, y);
-            positionsX.Remove(positionsX[randX]);
+            var randX = Math.floor(Math.random() * positionsX.length);
+            checkCell(x + positionsX[randX], y, x, y);
+            positionsX.splice(randX, 1);
           }
           break;
         case 1:
           if (positionsY.length >= 1) {
-            var randY = Math.floor(Math.random() * positionsY.length - 1);
-            CheckCell(x, y + positionsY[randY], x, y);
-            positionsY.Remove(positionsY[randY]);
+            var randY = Math.floor(Math.random() * positionsY.length);
+            checkCell(x, y + positionsY[randY], x, y);
+            positionsY.splice(randY, 1);
           }
           break;
       }
@@ -118,7 +127,7 @@ function getRndBorderCell() {
   switch (Math.floor(Math.random() * 4)) {
     //top
     case 0:
-      buffer = [Math.floor(Math.random() * GRIDSIZE) + 1, 0];
+      buffer = [Math.floor(Math.random() * (GRIDSIZE - 2)) + 1, 0];
       firstPos[0] = buffer[0];
       firstPos[1] = buffer[1];
       firstPos[1] += 1;
@@ -131,7 +140,7 @@ function getRndBorderCell() {
       break;
     //bottom
     case 1:
-      buffer = [Math.floor(Math.random() * GRIDSIZE) + 1, GRIDSIZE - 1];
+      buffer = [Math.floor(Math.random() * (GRIDSIZE - 2)) + 1, GRIDSIZE - 1];
       firstPos[0] = buffer[0];
       firstPos[1] = buffer[1];
       firstPos[1] -= 1;
@@ -144,7 +153,7 @@ function getRndBorderCell() {
       break;
     //left
     case 2:
-      buffer = [0, Math.floor(Math.random() * GRIDSIZE) + 1];
+      buffer = [0, Math.floor(Math.random() * (GRIDSIZE - 2)) + 1];
       firstPos[0] = buffer[0];
       firstPos[1] = buffer[1];
       firstPos[0] += 1;
@@ -157,7 +166,7 @@ function getRndBorderCell() {
       break;
     //right
     case 3:
-      buffer = [GRIDSIZE - 1, Math.floor(Math.random() * GRIDSIZE) + 1];
+      buffer = [GRIDSIZE - 1, Math.floor(Math.random() * (GRIDSIZE - 2)) + 1];
       firstPos[0] = buffer[0];
       firstPos[1] = buffer[1];
       firstPos[0] -= 1;
@@ -174,9 +183,13 @@ function getRndBorderCell() {
 
 firstCell = getRndBorderCell();
 tabGrid[firstCell[0]][firstCell[1]] = 1;
-console.log(firstCell);
-console.log(tabGrid);
+console.log(firstPos);
+checkCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
 
+do {
+  lastCell = getRndBorderCell();
+} while (!checkLastCell());
+tabGrid[lastCell[0]][lastCell[1]] = 1;
 printGrid();
 
 function printGrid() {
@@ -210,7 +223,48 @@ function printGrid() {
       if (cells[x][y] == 1 || cells[x][y] == 1 || !((cells[x][y - 1] == 2 && cells[x][y + 1] == 2) || (cells[x - 1][y] == 2 && cells[x + 1][y] == 2))) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
+<<<<<<< HEAD
+=======
+      }
+      else {
+        ctx.fillStyle = '#000fff';
+        ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
+>>>>>>> 75241bfc6aed615ec947e079c9e9400b061ceb4b
       }
     }
   }
+}
+
+function checkLastCell() {
+  switch (entryCardinalPoint) {
+    case "N":
+      if (exitCardinalPoint == "S") {
+        if (tabGrid[lastCell[0]][lastCell[1] - 1] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "S":
+      if (exitCardinalPoint == "N") {
+        if (tabGrid[lastCell[0]][lastCell[1] + 1] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "E":
+      if (exitCardinalPoint == "W") {
+        if (tabGrid[lastCell[0] + 1][lastCell[1]] == 1) {
+          return true;
+        }
+      }
+      break;
+    case "W":
+      if (exitCardinalPoint == "E") {
+        if (tabGrid[lastCell[0] - 1][lastCell[1]] == 1) {
+          return true;
+        }
+      }
+      break;
+  }
+  return false;
 }
