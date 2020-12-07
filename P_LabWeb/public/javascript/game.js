@@ -8,7 +8,7 @@ var fps = 60;
 var step = 1 / fps;
 var width = canvas.width;
 var height = canvas.height;
-var player = { width: 10, height: 10, x: 10, y: 10 };
+var player = { width: 10, height: 10 };
 var cell = { width: 10, height: 10 };
 
 var GRIDSIZE = 30;
@@ -17,9 +17,6 @@ var tabGrid = [[]];
 var firstCell = [];
 var firstPos = [];
 
-for (var y = 0; y < GRIDSIZE; y++) {
-  tabGrid.push(new Array(GRIDSIZE));
-}
 
 var entryCardinalPoint = "";
 var exitCardinalPoint = "";
@@ -27,18 +24,18 @@ var exitCardinalPoint = "";
 document.addEventListener('keydown', function (ev) { return onkey(ev, ev.keyCode, true); }, false);
 document.addEventListener('keyup', function (ev) { return onkey(ev, ev.keyCode, false); }, false);
 
-frame();
+runGame();
 
 function onkey(ev, key, down) {
   switch (key) {
     // Left
-    case 37: console.log("Left"); ev.preventDefault(); return false;
+    case 37: player.left = down; ev.preventDefault(); return false;
     // Up
-    case 38: console.log("Up"); ev.preventDefault(); return false;
+    case 38: player.up = down; ev.preventDefault(); return false;
     // Right
-    case 39: console.log("Right"); ev.preventDefault(); return false;
+    case 39: player.right = down; ev.preventDefault(); return false;
     // Down
-    case 40: console.log("Down"); ev.preventDefault(); return false;
+    case 40: player.down = down; ev.preventDefault(); return false;
   }
 }
 
@@ -56,13 +53,50 @@ function frame() {
 }
 
 function update(dt) {
+  if (player.left && player.x != 0) {
+    if (tabGrid[player.x - 1][player.y] != null) {
+      tabGrid[player.x][player.y] = 3;
+      player.x -= 1;
+      tabGrid[player.x][player.y] = 2;
+      printGrid();
+    }
+  }
+  if (player.right && player.x != GRIDSIZE) {
+    if (tabGrid[player.x + 1][player.y] != null) {
+      tabGrid[player.x][player.y] = 3;
+      player.x += 1;
+      tabGrid[player.x][player.y] = 2;
+      printGrid();
+    }
+  }
+  if (player.up && player.y != 0) {
+    if (tabGrid[player.x][player.y - 1] != null) {
+      tabGrid[player.x][player.y] = 3;
+      player.y -= 1;
+      tabGrid[player.x][player.y] = 2;
+      printGrid();
+    }
+  }
+  if (player.down && player.y != GRIDSIZE) {
+    if (tabGrid[player.x][player.y + 1] != null) {
+      tabGrid[player.x][player.y] = 3;
+      player.y += 1;
+      tabGrid[player.x][player.y] = 2;
+      printGrid();
+    }
+  }
+  if (tabGrid[lastCell[0]][lastCell[1]] != 1) {
+    console.log("YOU WON");
+    runGame();
+  }
 }
 
 function render(ctx, frame, dt) {
+  printGrid();
 }
 
 function renderPlayer(dt) {
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = '#00ff00';
   ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
@@ -170,16 +204,32 @@ function getRndBorderCell() {
   return buffer;
 }
 
-firstCell = getRndBorderCell();
-tabGrid[firstCell[0]][firstCell[1]] = 1;
-console.log(firstPos);
-checkCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
+function runGame() {
 
-do {
-  lastCell = getRndBorderCell();
-} while (!checkLastCell());
-tabGrid[lastCell[0]][lastCell[1]] = 1;
-printGrid();
+  tabGrid = [[]];
+  firstCell = [];
+  firstPos = [];
+
+  entryCardinalPoint = "";
+  exitCardinalPoint = "";
+  for (var y = 0; y < GRIDSIZE; y++) {
+    tabGrid.push(new Array(GRIDSIZE));
+  }
+  firstCell = getRndBorderCell();
+  tabGrid[firstCell[0]][firstCell[1]] = 1;
+  console.log(firstPos);
+  checkCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
+
+  do {
+    lastCell = getRndBorderCell();
+  } while (!checkLastCell());
+  tabGrid[lastCell[0]][lastCell[1]] = 1;
+  player.x = firstCell[0];
+  player.y = firstCell[1];
+  tabGrid[player.x][player.y] = 2;
+  printGrid();
+  frame();
+}
 
 function printGrid() {
   for (var y = 0; y < GRIDSIZE; y++) {
@@ -188,8 +238,16 @@ function printGrid() {
         ctx.fillStyle = '#000000';
         ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
       }
-      else {
+      else if (tabGrid[x][y] == null) {
         ctx.fillStyle = '#000fff';
+        ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
+      }
+      else if (tabGrid[x][y] == 2) {
+        ctx.fillStyle = '#00ff00';
+        ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
+      }
+      else if (tabGrid[x][y] == 3) {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
         ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
       }
     }
