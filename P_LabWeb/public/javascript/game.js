@@ -6,23 +6,19 @@ var now;
 var last = timestamp();
 var fps = 60;
 var step = 1 / fps;
+const GRIDSIZE = 10;
 var width = canvas.width;
 var height = canvas.height;
 var player = { width: 10, height: 10, x: 10, y: 10 };
 var cell = { width: 10, height: 10 };
 
-var GRIDSIZE = 10;
 
-var tabGrid = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-              [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+var tabGrid = [];
+for (var y = 0; y < GRIDSIZE; y++) {
+  tabGrid.push(new Array(GRIDSIZE));
+}
+
 var firstCell = [];
 var firstPos = [];
 
@@ -184,12 +180,36 @@ console.log(tabGrid);
 printGrid();
 
 function printGrid() {
+  var cells = [];
+
+  for (var y = 0; y < GRIDSIZE * 2; y++) {
+    cells.push(new Array(GRIDSIZE * 2));
+  }
+
+  //add the lab cells to all the cells. If the case is empty, the value is 2, it the case is full, the value is 1
   for (var y = 0; y < GRIDSIZE; y++) {
     for (var x = 0; x < GRIDSIZE; x++) {
       if (tabGrid[x][y] == 1) {
+        cells[x * 2][y * 2] = 1;
+      }
+      else {
+        cells[x * 2][y * 2] = 2;
+      }
+    }
+  }
+
+  for (var y = 0; y < GRIDSIZE * 2; y++) {
+    for (var x = 0; x < GRIDSIZE * 2; x++) {
+      if (x == 0 || y == 0 || x == GRIDSIZE * 2 - 1 || y == GRIDSIZE * 2 - 1) {
+        if (cells[x][y] != 2) {
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(cell.width * x , cell.height * y , cell.width, cell.height);
+        }
+        continue;
+      }
+      if (cells[x][y] == 1 || cells[x][y] == 1 || !((cells[x][y - 1] == 2 && cells[x][y + 1] == 2) || (cells[x - 1][y] == 2 && cells[x + 1][y] == 2))) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
-        console.log("test");
       }
     }
   }
