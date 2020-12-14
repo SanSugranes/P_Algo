@@ -6,19 +6,20 @@ var now;
 var last = timestamp();
 var fps = 60;
 var step = 1 / fps;
-const GRIDSIZE = 25;
 var width = canvas.width;
 var height = canvas.height;
 var player = { width: 10, height: 10 };
 var cell = { width: 10, height: 10 };
 
+var GRIDSIZE = 30;
 
+var cells = [];
 
-var tabGrid = [];
-for (var y = 0; y < GRIDSIZE; y++) {
-  tabGrid.push(new Array(GRIDSIZE));
+for (var y = 0; y < GRIDSIZE * 2; y++) {
+  cells.push(new Array(GRIDSIZE * 2));
 }
 
+var tabGrid = [[]];
 var firstCell = [];
 var firstPos = [];
 
@@ -59,34 +60,34 @@ function frame() {
 
 function update(dt) {
   if (player.left && player.x != 0) {
-    if (tabGrid[player.x - 1][player.y] != null) {
-      tabGrid[player.x][player.y] = 3;
+    if (cells[player.x - 1][player.y] != null) {
+      cells[player.x][player.y] = 3;
       player.x -= 1;
-      tabGrid[player.x][player.y] = 2;
+      cells[player.x][player.y] = 2;
       printGrid();
     }
   }
   if (player.right && player.x != GRIDSIZE) {
-    if (tabGrid[player.x + 1][player.y] != null) {
-      tabGrid[player.x][player.y] = 3;
+    if (cells[player.x + 1][player.y] != null) {
+      cells[player.x][player.y] = 3;
       player.x += 1;
-      tabGrid[player.x][player.y] = 2;
+      cells[player.x][player.y] = 2;
       printGrid();
     }
   }
   if (player.up && player.y != 0) {
-    if (tabGrid[player.x][player.y - 1] != null) {
-      tabGrid[player.x][player.y] = 3;
+    if (cells[player.x][player.y - 1] != null) {
+      cells[player.x][player.y] = 3;
       player.y -= 1;
-      tabGrid[player.x][player.y] = 2;
+      cells[player.x][player.y] = 2;
       printGrid();
     }
   }
   if (player.down && player.y != GRIDSIZE) {
-    if (tabGrid[player.x][player.y + 1] != null) {
-      tabGrid[player.x][player.y] = 3;
+    if (cells[player.x][player.y + 1] != null) {
+      cells[player.x][player.y] = 3;
       player.y += 1;
-      tabGrid[player.x][player.y] = 2;
+      cells[player.x][player.y] = 2;
       printGrid();
     }
   }
@@ -211,7 +212,7 @@ function getRndBorderCell() {
 
 function runGame() {
 
-  tabGrid = [[]];
+  tabGrid = [];
   firstCell = [];
   firstPos = [];
 
@@ -222,66 +223,64 @@ function runGame() {
   }
   firstCell = getRndBorderCell();
   tabGrid[firstCell[0]][firstCell[1]] = 1;
-  console.log(firstPos);
   checkCell(firstPos[0], firstPos[1], firstCell[0], firstCell[1]);
 
   do {
     lastCell = getRndBorderCell();
   } while (!checkLastCell());
   tabGrid[lastCell[0]][lastCell[1]] = 1;
-  player.x = firstCell[0];
-  player.y = firstCell[1];
-  tabGrid[player.x][player.y] = 2;
-  printGrid();
+  player.x = firstCell[0] * 2;
+  player.y = firstCell[1] * 2;
+  cells[player.x][player.y] = 2;
+  createGrid();
   frame();
 }
 
-function printGrid() {
-  var cells = [];
-
-  for (var y = 0; y < GRIDSIZE * 2; y++) {
-    cells.push(new Array(GRIDSIZE * 2));
-  }
-
+function createGrid() {
   //add the lab cells to all the cells. If the case is empty, the value is 2, it the case is full, the value is 1
   for (var y = 0; y < GRIDSIZE; y++) {
     for (var x = 0; x < GRIDSIZE; x++) {
-      if (tabGrid[x][y] == 1) {
-        cells[x * 2][y * 2] = 1;
-      }
-      else {
-        cells[x * 2][y * 2] = 2;
-      }
+      cells[x * 2][y * 2] = tabGrid[x][y];
     }
   }
 
-  for (var y = 0; y < GRIDSIZE * 2; y++) 
-  {
-    for (var x = 0; x < GRIDSIZE * 2; x++) 
-    {
-      if (!(x == 0 || y == 0 || x == GRIDSIZE * 2 - 1 || y == GRIDSIZE * 2 - 1)) 
-      {
-        if (cells[x][y] == 1 || (cells[x][y - 1] == 1 && cells[x][y + 1] == 1) || (cells[x - 1][y] == 1 && cells[x + 1][y] == 1)) 
-        {
-          ctx.fillStyle = '#000fff';
-        }
-        else 
-        {
-          ctx.fillStyle = '#000000';
+  for (var y = 0; y < GRIDSIZE * 2; y++) {
+    for (var x = 0; x < GRIDSIZE * 2; x++) {
+      if (!(x == 0 || y == 0 || x == GRIDSIZE * 2 - 1 || y == GRIDSIZE * 2 - 1)) {
+        if (cells[x][y] == 1 || (cells[x][y - 1] == 1 && cells[x][y + 1] == 1) || (cells[x - 1][y] == 1 && cells[x + 1][y] == 1)) {
+          cells[x][y] = 1;
         }
       }
-      else
-      {
-        if (cells[x][y] == 1) 
-        {
-          ctx.fillStyle = '#000fff';
-        }
-        else
-        {
-          ctx.fillStyle = '#000000';
+      else {
+        if (cells[x][y] == 1) {
+          cells[x][y] = 1;
         }
       }
-      
+    }
+  }
+  printGrid()
+
+}
+
+function printGrid() {
+  for (var y = 0; y < GRIDSIZE * 2; y++) {
+    for (var x = 0; x < GRIDSIZE * 2; x++) {
+      //path
+      if (cells[x][y] == 1) {
+        ctx.fillStyle = '#000000';
+      }
+      // Player
+      else if (cells[x][y] == 2) {
+        ctx.fillStyle = '#00ff00';
+      }
+      // Trail
+      else if (cells[x][y] == 3) {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      }
+      // Wall
+      else {
+        ctx.fillStyle = '#000fff';
+      }
       ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
     }
   }
