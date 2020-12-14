@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!--
+            Auteur:Clément Sartoni
+            Date:09/06/2020
+            Description: Page d'acceuil du site des jeux sympas. Elle contient un texte de bienvenue, des liens vers certains jeux 
+                         et un lien vers la page regroupant tous les jeux.
+        -->
+        <title>Jeux - Accueil</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="../../ressources/css/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="mainContainer">
+            <header>
+                <a class="logoLink" href="home.html">
+                    <img src="../../ressources/images/logo.jpg" alt="Le logo du site" id="logo">
+                </a>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="home.html" class="active">ACCUEIL</a></li>
+                        <li><a href="jeux.html">JEUX</a></li>
+                        <li><a href="infos.html">INFOS</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="content">
+                <section class="title">
+                    <h2>Bienvenue!</h2>
+                    <p>Sur ce site vous pourrez jouer à des jeux classiques, comme Snake, directement sur une page web. 
+                        Vous pourrez même jouer à deux! (sur le même clavier)
+                    </p>
+                </section>
+                <div class="borderTitle"></div>
+                <div class="redirectContainerLeft" style="background-image: url(../../ressources/images/snakeRedirect.jpg);">
+                    <div class="redirect">
+                        <h4>Snake</h4>
+                        <p class="redirectText">Le célèbre Snake vous attend pour manger des pommes! </p>
+                        <a class="redirectLink" href="snake.html">
+                            <p class="linkDecoration">></p>
+                            <p class="linkText">Jouer</p>
+                            <p class="linkDecoration">&lt;</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="redirectContainerRight" style="background-image: url(../../ressources/images/jeuxRedirect.jpg);">
+                    <div class="redirect">
+                        <h4>Jeux</h4>
+                        <p class="redirectText">Cliquez ici pour voir tous les jeux disponibles. </p>
+                        <a class="redirectLink" href="jeux.html">
+                            <p class="linkDecoration">></p>
+                            <p class="linkText">Y aller</p>
+                            <p class="linkDecoration">&lt;</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="redirectContainerLeft" style="background-image: url(../../ressources/images/infosRedirect.jpg);">
+                    <div class="redirect">
+                        <h4>Infos</h4>
+                        <p class="redirectText">Si vous voulez en savoir plus sur ce site et son créateur, c'est ici.</p>
+                        <a class="redirectLink" href="infos.html">
+                            <p class="linkDecoration">></p>
+                            <p class="linkText">En savoir plus</p>
+                            <p class="linkDecoration">&lt;</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p>Clément Sartoni</p>
+                <p>© ETML 2020</p>
+                <a href="infos.html">Plus d'informations</a>
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,250 @@
+/*
+    Auteur: Clément Sartoni
+    Date: 09.06.2020
+    Description: Feuille de style du site des jeux en javascript.
+*/
+body{
+    margin:0;
+    background-color: #0f001a;
+    color: #f5e6ff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#mainContainer{
+    width: 95%;
+    margin:0 auto;
+}
+header {
+    display: flex;
+    height: 75px;
+    justify-content: space-between;
+}
+.logoLink{
+    margin: auto 0 auto 30px;
+}
+#mainNav{
+    margin: auto 30px auto 0;
+}
+#mainNav ul{
+    display: flex;
+    justify-content: space-evenly;
+}
+#mainNav ul li{
+    list-style: none;
+    margin: auto 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-size: 16pt;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+a.active{
+    color: #7a00cc;
+}
+a:hover{
+    color: #9900ff;
+}
+#content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 980px;
+    margin:0 auto;
+}
+.title{
+    text-align: center;
+}
+.borderTitle{
+    border-top: 2px solid #f5e6ff;
+    width: 125%;
+}
+footer{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12pt;
+}
+/*Page d'acceuil*/
+.redirectContainerLeft, .redirectContainerRight{
+    margin: 20px 0;
+    display:flex;
+    width: 100%;
+    height: 166px;
+}
+.redirectContainerLeft{
+    justify-content: left;
+}
+.redirectContainerRight{
+    justify-content: right;
+}
+.redirectContainerLeft .redirect{
+    padding: 0 15px;
+    width: 60%;
+    height:100%;
+    background-image: linear-gradient(to right,rgb(14, 0, 26), rgb(14, 0, 26), rgb(14, 0, 26), rgb(14, 0, 26, 0))
+}
+.redirectContainerRight .redirect{
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    width: 60%;
+    height:100%;
+    background-image: linear-gradient(to right,rgb(14, 0, 26, 0), rgb(14, 0, 26), rgb(14, 0, 26), rgb(14, 0, 26))
+}
+.redirectText{
+    font-size: 14px;
+    width: 65%;
+}
+.redirectLink{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:65%;
+    transition: color 1s;
+}
+.linkDecoration{
+    margin:0;
+    color: #8d44be;
+}
+.linkText{
+    margin: 0 15px;
+    transition: margin 1s;
+}
+.redirectLink:hover{
+    cursor: pointer; 
+}
+.redirectLink:hover .linkText{
+    margin: 0 5px;
+}
+
+/*Page des Jeux*/
+.gameCardsContainer{
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.gameCard{
+    width: 350px;
+    margin: 15px;
+    border: 3px solid #f5e6ff;
+    background-color: #1c072b;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: border-color 1s;
+}
+.gameCard:hover{
+    color:#f5e6ff;
+    border-color: #9900ff;
+}
+.gameCard .cardRedirect:hover{
+    color:  #9900ff;
+}
+.cardTitle{
+    margin: 2px 0 10px 0;
+}
+.cardText{
+    margin: 0 10px 10px 10px;
+    font-size: 11pt;
+}
+.cardRedirect{
+    margin-bottom: 15px;
+}
+
+/*Page de jeu*/
+.gameZone{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gameIndications{
+    font-size: 11pt;
+    width: 278px;
+    margin: 0 5px;
+    visibility: hidden;
+}
+.helpButtonContainer{
+    width: 278px;
+    margin: 0 5px;
+}
+#helpButton{
+    cursor: pointer;
+}
+.stats{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+.statsSolo, .statsMulti{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.stats div p{
+    margin:0;
+}
+.statsMulti{
+    display: none;
+}
+.icon{
+    width:30px;
+    height:30px;
+}
+.indicJoueur1, .indicJoueur2{
+    font-size: 15pt;
+    font-weight: bold;
+}
+.indicJoueur1{
+    color:green;
+}
+.indicJoueur2{
+    color:blue;
+}
+canvas{
+    border: 2px #f5e6ff solid;
+    margin: 15px 0 25px 0;
+}
+#buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid #f5e6ff;
+    margin: 0 7px;
+    color: #f5e6ff;
+    background-color: transparent;
+    font-size: 13px;
+    letter-spacing: 1Q;
+}
+button:hover{
+    color: #bd5bff;
+    /*background-color: #e1b3ff73;*/
+    border: 2px solid #9900ff;
+}
+.currentButton{
+    border: 2px solid #7a00cc;
+}
+
+/*Page des Infos*/
+.infosTitle{
+    font-size: 11.5pt;
+}
+.infosTable{
+    margin: 30px 30% 30px 30px;
+    width: 50%;
+}
+.infosTable a{
+    color: #b74aff;
+}

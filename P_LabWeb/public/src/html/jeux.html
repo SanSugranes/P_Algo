@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!--
+            Auteur:Clément Sartoni
+            Date:09/06/2020
+            Description: Page "Jeux" du site qui contient la liste de tous les jeux disponibles
+        -->
+        <title>Jeux</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="../../ressources/css/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="mainContainer">
+            <header>
+                <a class="logoLink" href="home.html">
+                    <img src="../../ressources/images/logo.jpg" alt="Le logo du site" id="logo">
+                </a>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="home.html">ACCUEIL</a></li>
+                        <li><a href="jeux.html" class="active">JEUX</a></li>
+                        <li><a href="infos.html">INFOS</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="content">
+                <section class="title">
+                    <h2>Bienvenue!</h2>
+                    <p>Sur cette page sont regroupés tous les jeux disponibles sur ce site.
+                    </p>
+                </section>
+                <div class="borderTitle"></div>
+                <div class="gameCardsContainer">
+                    <a class="gameCard" href="snake.html">
+                        <img src="../../ressources/images/snakeCard.png" alt="une image du jeu Snake" class="cardImage">
+                        <h4 class="cardTitle">Snake</h4>
+                        <p class="cardText">Incarnez un serpent affamé dans un monde en 2D, seul ou à deux.</p>
+                        <div class="redirectLink cardRedirect">
+                            <p class="linkDecoration">></p>
+                            <p class="linkText">Jouer</p>
+                            <p class="linkDecoration">&lt;</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <footer>
+                <p>Clément Sartoni</p>
+                <p>© ETML 2020</p>
+                <a href="infos.html">Plus d'informations</a>
+            </footer>
+        </div>
+    </body>
+</html>

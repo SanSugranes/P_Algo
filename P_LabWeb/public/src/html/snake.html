@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <!--
+            Auteur:Clément Sartoni
+            Date:09/06/2020
+            Description: Page d'acceuil du site des jeux sympas. Elle contient un texte de bienvenue, des liens vers certains jeux 
+                         et un lien vers la page regroupant tous les jeux.
+        -->
+        <title>Snake</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="../../ressources/css/style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="mainContainer">
+            <header>
+                <a class="logoLink" href="home.html">
+                    <img src="../../ressources/images/logo.jpg" alt="Le logo du site" id="logo">
+                </a>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="home.html">ACCUEIL</a></li>
+                        <li><a href="jeux.html">JEUX</a></li>
+                        <li><a href="infos.html">INFOS</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="content">
+                <section class="title">
+                    <h2>Snake</h2>
+                    <p>Vous pouvez commencer à jouer en cliquant sur la zone ci-dessous.
+                    </p>
+                </section>
+                <div class="borderTitle"></div>
+                <div class="gameZone">
+                    <div class="gameIndications">
+                        <h4>Buts du jeu:</h4>
+                        <p>Solo: Manger le plus de pommes.</p>
+                        <p>Multi: Être le dernier serpent vivant.</p>
+                        <h4>Règles:</h4>
+                        <p>-Un serpent meurt quand il touche quelque chose avec sa tête.</p>
+                        <p>-Un serpent grandit en mangeant une pomme.</p>
+                    </div>
+                    <div>
+                        <div class="stats">
+                            <div class="statsSolo">
+                                <img src="../../ressources/images/pomme.png" alt="une icone de pomme" class="icon">
+                                <p>:&nbsp;</p>
+                                <p id="pommes">0</p>
+                            </div>
+                            <div class="statsSolo">
+                                <img src="../../ressources/images/medal.png" alt="une icone de médaille" class="icon">
+                                <p>:&nbsp;</p>
+                                <p id="maxPommes">0</p>
+                            </div>
+                            <div class="statsSolo">
+                                <img src="../../ressources/images/horloge.png" alt="une icone d'horloge'" class="icon">
+                                <p>:&nbsp;</p>
+                                <p id="timer">0'0"</p>
+                            </div>
+                            <div class="statsMulti">
+                                <p class="indicJoueur1">P1</p>
+                                <p>&nbsp;:&nbsp;</p>
+                                <p id="pommesJoueur1">0</p>
+                            </div>
+                            <div class="statsMulti">
+                                <p class="indicJoueur2">P2</p>
+                                <p>&nbsp;:&nbsp;</p>
+                                <p id="pommesJoueur2">0</p>
+                            </div>
+                        </div>
+                        <canvas id="canvasSnake" width="400" height="400"></canvas>
+                        <div id= buttons>
+                            <button id="buttonOnePlayer" class="currentButton">Un joueur</button>
+                            <button id="buttonTwoPlayers">Deux joueurs</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="helpButtonContainer">
+                            <img src="../../ressources/images/helpIcon.png" alt="une icone d'aide" id="helpButton">
+                        </div>
+                        <div class="gameIndications">
+                            <h4>Touches:</h4>
+                            <p>Déplacements:</p>
+                            <p>Serpent 1: W A S D</p>
+                            <p>Serpent 2: Flèches directionelles</p>
+                        </div>
+                        <div class="helpButtonContainer"></div>
+                    </div>   
+                </div>              
+            </div>
+            <footer>
+                <p>Clément Sartoni</p>
+                <p>© ETML 2020</p>
+                <a href="infos.html">Plus d'informations</a>
+            </footer>
+        </div>
+        <script src="../../ressources/javascript/snake.js"></script>
+    </body>
+</html>

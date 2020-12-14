@@ -14,11 +14,6 @@ var cell = { width: 10, height: 10 };
 var GRIDSIZE = 30;
 
 var cells = [];
-
-for (var y = 0; y < GRIDSIZE * 2; y++) {
-  cells.push(new Array(GRIDSIZE * 2));
-}
-
 var tabGrid = [[]];
 var firstCell = [];
 var firstPos = [];
@@ -59,39 +54,39 @@ function frame() {
 }
 
 function update(dt) {
+
+  cells[player.x][player.y] = 3;
+
+  //left
   if (player.left && player.x != 0) {
     if (cells[player.x - 1][player.y] != null) {
-      cells[player.x][player.y] = 3;
       player.x -= 1;
-      cells[player.x][player.y] = 2;
-      printGrid();
     }
   }
-  if (player.right && player.x != GRIDSIZE) {
+  //right
+  if (player.right && player.x != GRIDSIZE * 2) {
     if (cells[player.x + 1][player.y] != null) {
-      cells[player.x][player.y] = 3;
       player.x += 1;
-      cells[player.x][player.y] = 2;
-      printGrid();
     }
   }
+  //up
   if (player.up && player.y != 0) {
     if (cells[player.x][player.y - 1] != null) {
-      cells[player.x][player.y] = 3;
       player.y -= 1;
-      cells[player.x][player.y] = 2;
-      printGrid();
     }
   }
-  if (player.down && player.y != GRIDSIZE) {
+  //down
+  if (player.down && player.y != GRIDSIZE * 2) {
     if (cells[player.x][player.y + 1] != null) {
-      cells[player.x][player.y] = 3;
       player.y += 1;
-      cells[player.x][player.y] = 2;
-      printGrid();
     }
   }
-  if (tabGrid[lastCell[0]][lastCell[1]] != 1) {
+
+  cells[player.x][player.y] = 2;
+  printGrid();
+
+  //victory
+  if (cells[lastCell[0] * 2][lastCell[1] * 2] != 1) {
     console.log("YOU WON");
     runGame();
   }
@@ -213,6 +208,7 @@ function getRndBorderCell() {
 function runGame() {
 
   tabGrid = [];
+  cells = [];
   firstCell = [];
   firstPos = [];
 
@@ -220,6 +216,9 @@ function runGame() {
   exitCardinalPoint = "";
   for (var y = 0; y < GRIDSIZE; y++) {
     tabGrid.push(new Array(GRIDSIZE));
+  }
+  for (var y = 0; y < GRIDSIZE * 2; y++) {
+    cells.push(new Array(GRIDSIZE * 2));
   }
   firstCell = getRndBorderCell();
   tabGrid[firstCell[0]][firstCell[1]] = 1;
@@ -263,8 +262,8 @@ function createGrid() {
 }
 
 function printGrid() {
-  for (var y = 0; y < GRIDSIZE * 2; y++) {
-    for (var x = 0; x < GRIDSIZE * 2; x++) {
+  for (var y = 0; y < GRIDSIZE * 2 - 1; y++) {
+    for (var x = 0; x < GRIDSIZE * 2 - 1; x++) {
       //path
       if (cells[x][y] == 1) {
         ctx.fillStyle = '#000000';
