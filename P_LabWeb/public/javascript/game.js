@@ -6,13 +6,12 @@ var now;
 var last = timestamp();
 var fps = 60;
 var step = 1 / fps;
-const GRIDSIZE = 10;
+const GRIDSIZE = 25;
 var width = canvas.width;
 var height = canvas.height;
 var player = { width: 10, height: 10, x: 10, y: 10 };
 var cell = { width: 10, height: 10 };
 
-<<<<<<< HEAD
 
 
 var tabGrid = [];
@@ -20,11 +19,6 @@ for (var y = 0; y < GRIDSIZE; y++) {
   tabGrid.push(new Array(GRIDSIZE));
 }
 
-=======
-var GRIDSIZE = 30;
-
-var tabGrid = [[]];
->>>>>>> 75241bfc6aed615ec947e079c9e9400b061ceb4b
 var firstCell = [];
 var firstPos = [];
 
@@ -73,7 +67,7 @@ function render(ctx, frame, dt) {
 }
 
 function renderPlayer(dt) {
-  ctx.fillStyle = '#000000';
+  ctx.fillStyle = '#00ff00';
   ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
@@ -211,26 +205,34 @@ function printGrid() {
     }
   }
 
-  for (var y = 0; y < GRIDSIZE * 2; y++) {
-    for (var x = 0; x < GRIDSIZE * 2; x++) {
-      if (x == 0 || y == 0 || x == GRIDSIZE * 2 - 1 || y == GRIDSIZE * 2 - 1) {
-        if (cells[x][y] != 2) {
-          ctx.fillStyle = '#000000';
-          ctx.fillRect(cell.width * x , cell.height * y , cell.width, cell.height);
+  for (var y = 0; y < GRIDSIZE * 2; y++) 
+  {
+    for (var x = 0; x < GRIDSIZE * 2; x++) 
+    {
+      if (!(x == 0 || y == 0 || x == GRIDSIZE * 2 - 1 || y == GRIDSIZE * 2 - 1)) 
+      {
+        if (cells[x][y] == 1 || (cells[x][y - 1] == 1 && cells[x][y + 1] == 1) || (cells[x - 1][y] == 1 && cells[x + 1][y] == 1)) 
+        {
+          ctx.fillStyle = '#000fff';
         }
-        continue;
+        else 
+        {
+          ctx.fillStyle = '#000000';
+        }
       }
-      if (cells[x][y] == 1 || cells[x][y] == 1 || !((cells[x][y - 1] == 2 && cells[x][y + 1] == 2) || (cells[x - 1][y] == 2 && cells[x + 1][y] == 2))) {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
-<<<<<<< HEAD
-=======
+      else
+      {
+        if (cells[x][y] == 1) 
+        {
+          ctx.fillStyle = '#000fff';
+        }
+        else
+        {
+          ctx.fillStyle = '#000000';
+        }
       }
-      else {
-        ctx.fillStyle = '#000fff';
-        ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
->>>>>>> 75241bfc6aed615ec947e079c9e9400b061ceb4b
-      }
+      
+      ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
     }
   }
 }
