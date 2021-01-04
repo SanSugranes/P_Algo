@@ -1,4 +1,6 @@
 var canvas = document.getElementById('canvas');
+var victoriesCounter = document.getElementById('victories');
+var victories = 0;
 var ctx = canvas.getContext('2d');
 var counter = 0;
 var dt = 0;
@@ -39,7 +41,6 @@ function onkey(ev, key, down) {
     case 40: player.down = down; ev.preventDefault(); return false;
   }
 }
-
 function frame() {
   now = timestamp();
   dt = dt + Math.min(1, (now - last) / 1000);
@@ -88,6 +89,7 @@ function update(dt) {
   //victory
   if (cells[lastCell[0] * 2][lastCell[1] * 2] != 1) {
     console.log("YOU WON");
+    victories++;
     runGame();
   }
 }
@@ -206,6 +208,8 @@ function getRndBorderCell() {
 }
 
 function runGame() {
+  //print player's score
+  victoriesCounter.textContent = victories;
 
   tabGrid = [];
   cells = [];

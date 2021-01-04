@@ -11,8 +11,6 @@ const pMaxPommes = document.getElementById("maxPommes");                        
 const pTimer = document.getElementById("timer");                                //indicateur du temps passé
 const pScoreP1 = document.getElementById("pommesJoueur1");                      //indicateur du nombre de pommes du joueur 1
 const pScoreP2 = document.getElementById("pommesJoueur2");                      //indicateur du nombre de pommes du joueur 2
-const divsIndications = document.getElementsByClassName("gameIndications")      //les div contenant les touches, les règles, etc.
-const bHelp = document.getElementById("helpButton");                            //le bouton pour afficher l'aide
 const bOnePlayer = document.getElementById("buttonOnePlayer");                  //le bouton pour faire une partie seul
 const bTwoPlayers = document.getElementById("buttonTwoPlayers");                //le bouton pour faire une partie à deux
 const canvas = document.getElementById("canvasSnake");                          //reprèsente le canvas
@@ -217,29 +215,6 @@ bTwoPlayers.onclick = function()
     //indique que c'est une partie solo et réinitialise le canvas
     twoPlayers = true;
     initialize();
-}
-
-//quand le joueur veut afficher l'aide
-bHelp.onclick = function()
-{
-    if(!helped)
-    {
-        //affiche les divs
-        divsIndications[0].style.visibility = "visible";
-        divsIndications[1].style.visibility = "visible";
-
-        //indique qu'elles restent pour l'instant
-        helped = true;
-    }
-    else
-    {
-        //cache les divs
-        divsIndications[0].style.visibility = "hidden";
-        divsIndications[1].style.visibility = "hidden";
-
-        //indique qu'elles ne restent pas
-        helped = false;
-    }
 }
 
 //change la direction du serpent en fonction de la touche pressée
