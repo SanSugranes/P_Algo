@@ -78,7 +78,7 @@ footer{
     justify-content: left;
 }
 .redirectContainerRight{
-    justify-content: right;
+    justify-content: flex-end;
 }
 .redirectContainerLeft .redirect{
     padding: 0 15px;
