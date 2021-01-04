@@ -284,7 +284,29 @@ function printGrid() {
       else {
         ctx.fillStyle = '#000fff';
       }
+	  
+	  
       ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height);
+	  
+	  
+	  if (x == lastCell[0] * 2 && y == lastCell[1] * 2){
+        ctx.fillStyle = '#00bb00';
+		switch(exitCardinalPoint){
+			case "N":
+				ctx.fillRect(cell.width * x, cell.height * y, cell.width, cell.height / 2);
+				break;
+			case "S":
+				ctx.fillRect(cell.width * x, cell.height * y + cell.height / 2, cell.width, cell.height / 2);
+				break;
+			case "E":
+				ctx.fillRect(cell.width * x + cell.width / 2, cell.height * y, cell.width / 2, cell.height);			
+				break;
+			case "W":
+				ctx.fillRect(cell.width * x, cell.height * y , cell.width / 2, cell.height);
+				break;
+		}
+	  }
+	  
     }
   }
 }
